@@ -9,7 +9,7 @@
 import UIKit
 
 class ViewController: UIViewController {
-
+    
     
     
     @IBOutlet var score: UILabel!
@@ -20,11 +20,14 @@ class ViewController: UIViewController {
     
     var emojiCard = [Int: String] ()
     
-
+    
     @IBAction func newGame(_ sender: UIButton) {
         game = Concentration(numberOfPairsOfCards: (cardButtons.count + 1)/2)
         game.flipCount = 0
         emojiChoices = Theme.getTheme()
+        for button in cardButtons {
+            button.isEnabled = true
+        }
         updateView()
     }
     
@@ -36,7 +39,6 @@ class ViewController: UIViewController {
     @IBAction func touchCard(_ sender: UIButton) {
         if let index = cardButtons.firstIndex(of: sender) {
             game.touchCard(cardIndex: index)
-            
             updateView()
         }
     }
@@ -50,13 +52,16 @@ class ViewController: UIViewController {
             if card.isFaceUp {
                 button.setTitle(emoji(card), for: UIControl.State.normal)
                 button.backgroundColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
-                }
-                else {
-                    button.setTitle("", for: UIControl.State.normal)
-                    button.backgroundColor = game.cards[i].isMatched ? #colorLiteral(red: 1, green: 1, blue: 1, alpha: 0) : #colorLiteral(red: 1, green: 0.5763723254, blue: 0, alpha: 1)
+            }
+            else {
+                button.setTitle("", for: UIControl.State.normal)
+                button.backgroundColor = game.cards[i].isMatched ? #colorLiteral(red: 1, green: 1, blue: 1, alpha: 0) : #colorLiteral(red: 1, green: 0.5763723254, blue: 0, alpha: 1)
+                if game.cards[i].isMatched {
+                    button.isEnabled = false
                 }
             }
         }
+    }
     
     
     func emoji (_ card: Card) -> String {

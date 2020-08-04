@@ -26,6 +26,9 @@ class Concentration {
     
     func touchCard (cardIndex: Int) {
         if cards.indices.contains(cardIndex) {
+            if cardIndex != oneAndOnlyCard {
+                flipCount += 1
+            }
             if let index = oneAndOnlyCard, oneAndOnlyCard != cardIndex {
                 if cards[index].identifier == cards[cardIndex].identifier {
                     cards[index].isMatched = true
