@@ -14,14 +14,8 @@ struct Theme {
                                        "😃😘😎🥵🥶😱😡🥳😭🤓",
                                        "💰🛢☎️🎞📷💾💿⌚️💻🖨")
     
-    init() {
-        
-    }
-    
     static func getTheme() -> String {
         let rand = Int(arc4random_uniform(UInt32(emojiThemes.count)))
         return emojiThemes[rand]
-        
     }
-    
 }

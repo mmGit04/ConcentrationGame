@@ -13,17 +13,10 @@ struct Card {
     var isMatched: Bool = false
     var isOpened: Bool = false
     
-    let identifier: Int
+    let identifier: Int = {
+       id += 1
+       return id
+    }()
     
     static var id:Int = 0
-    
-    static func getID()->Int {
-        id += 1
-        return id
-    }
-    
-    init() {
-        identifier = Card.getID()
-    }
-    
 }

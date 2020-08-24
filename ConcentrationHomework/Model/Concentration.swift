@@ -21,34 +21,30 @@ class Concentration {
             cards += [card,card]
         }
         cards.shuffle()
-        
     }
     
     func touchCard (cardIndex: Int) {
         if cards.indices.contains(cardIndex) {
-            if cardIndex != oneAndOnlyCard {
-                flipCount += 1
+            
+            if cards[cardIndex].isOpened {
+                score -= 1
+            } else {
+                cards[cardIndex].isOpened = true
             }
-            if let index = oneAndOnlyCard, oneAndOnlyCard != cardIndex {
+            
+            flipCount += 1
+            if let index = oneAndOnlyCard {
+                // Second card opened
                 if cards[index].identifier == cards[cardIndex].identifier {
+                    // Match
                     cards[index].isMatched = true
                     cards[cardIndex].isMatched = true
                     score += 2
-                }
-                else {
-                    if cards[cardIndex].isOpened {
-                        score -= 1
-                    }
-                    else {
-                        cards[cardIndex].isOpened = true
-                    }
-                    
                 }
                 cards[cardIndex].isFaceUp = true
                 oneAndOnlyCard = nil
             }
             else {
-                cards[cardIndex].isOpened = true
                 for i in cards.indices {
                     cards[i].isFaceUp = false
                 }
@@ -57,6 +53,4 @@ class Concentration {
             }
         }
     }
-    
-    
 }
