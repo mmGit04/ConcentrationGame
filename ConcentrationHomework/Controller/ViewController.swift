@@ -9,32 +9,26 @@
 import UIKit
 
 class ViewController: UIViewController {
-    
-    
-    
+
+    // Outlets
     @IBOutlet var score: UILabel!
+    @IBOutlet var cardButtons: [UIButton]!
+    @IBOutlet var flipCountLabel: UILabel!
     
+    // Variables
     lazy var game:Concentration = Concentration(numberOfPairsOfCards: (cardButtons.count + 1)/2)
-    
     var emojiChoices = Theme.getTheme()
-    
     var emojiCard = [Int: String] ()
     
     
     @IBAction func newGame(_ sender: UIButton) {
         game = Concentration(numberOfPairsOfCards: (cardButtons.count + 1)/2)
-        game.flipCount = 0
         emojiChoices = Theme.getTheme()
         for button in cardButtons {
             button.isEnabled = true
         }
         updateView()
     }
-    
-    @IBOutlet var cardButtons: [UIButton]!
-    
-    
-    @IBOutlet var flipCountLabel: UILabel!
     
     @IBAction func touchCard(_ sender: UIButton) {
         if let index = cardButtons.firstIndex(of: sender) {
@@ -65,15 +59,13 @@ class ViewController: UIViewController {
         }
     }
     
-    
-    func emoji (_ card: Card) -> String {
+    private func emoji (_ card: Card) -> String {
         if nil == emojiCard[card.identifier] {
-            let rand =  Int(arc4random_uniform(UInt32(emojiChoices.count - 1)))
+            let rand =  Int.random(in: 0 ..< emojiChoices.count)
             let index = emojiChoices.index(emojiChoices.startIndex, offsetBy: rand)
             emojiCard[card.identifier] = String(emojiChoices.remove(at: index))
         }
         return emojiCard[card.identifier] ?? "" 
     }
-    
 }
 

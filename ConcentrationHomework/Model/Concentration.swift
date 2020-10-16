@@ -26,6 +26,7 @@ class Concentration {
     func touchCard (cardIndex: Int) {
         if cards.indices.contains(cardIndex) {
             
+            // Decrement score if card already opened
             if cards[cardIndex].isOpened {
                 score -= 1
             } else {
